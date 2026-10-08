@@ -6,9 +6,6 @@ load_dotenv()
 
 token = os.getenv("MONGODB_URI")
 
-print("URI loaded:", token is not None)
-print("URI starts with:", token[:20] if token else None)
-
 client = MongoClient(token)
 db = client["mongodb_learning"]
 users = db["users"]
@@ -52,5 +49,5 @@ user3 = users.delete_one({"name": "Sara"})
 print(user3.deleted_count)
 
 #delete_many()
-user4 = users.delete_many({"age": 20})
+user4 = users.delete_many({"age": 21})
 print(user4.deleted_count)
