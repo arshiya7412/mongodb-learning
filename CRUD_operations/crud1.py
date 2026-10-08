@@ -1,14 +1,8 @@
 import os
 from dotenv import load_dotenv
 from pymongo import MongoClient
-from pathlib import Path
 
-env_path = Path(__file__).resolve().parent.parent / ".env"
-
-print("Looking for .env at:", env_path)
-print(".env exists:", env_path.exists())
-
-load_dotenv(env_path)
+load_dotenv()
 
 token = os.getenv("MONGODB_URI")
 
@@ -52,3 +46,11 @@ user2 = users.update_many(
     {"$set":{"role": "Developer"}}
 )
 print(user2.modified_count)
+
+#delete_one()
+user3 = users.delete_one({"name": "Sara"})
+print(user3.deleted_count)
+
+#delete_many()
+user4 = users.delete_many({"age": 20})
+print(user4.deleted_count)
