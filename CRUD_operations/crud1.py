@@ -1,6 +1,21 @@
+import os
+from dotenv import load_dotenv
 from pymongo import MongoClient
-MONGODB_URI = "mongodb+srv://arshiyasana2006_db_user:FzzFqcFeZdhpPUTs@cluster0.6hudpgy.mongodb.net"
-client = MongoClient(MONGODB_URI)
+from pathlib import Path
+
+env_path = Path(__file__).resolve().parent.parent / ".env"
+
+print("Looking for .env at:", env_path)
+print(".env exists:", env_path.exists())
+
+load_dotenv(env_path)
+
+token = os.getenv("MONGODB_URI")
+
+print("URI loaded:", token is not None)
+print("URI starts with:", token[:20] if token else None)
+
+client = MongoClient(token)
 db = client["mongodb_learning"]
 users = db["users"]
 result = users.insert_many([{
