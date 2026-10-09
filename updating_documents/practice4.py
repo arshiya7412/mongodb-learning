@@ -20,14 +20,9 @@ result = users.insert_many([{
     }
 }])
 
-push = users.update_one(
-    {"name": "Arshiya"},
-    {"$push": {"skills": "SQL"}}
+#upsert
+upsert = users.update_one(
+    {"name": "Zara"},
+    {"$set":{"age": 22}}, upsert=True
 )
-print(push)
-
-pull = users.update_one(
-    {"name": "Arshiya"},
-    {"$pull":{"skills": "SQL"}}
-    )
-print(pull)
+print(upsert)

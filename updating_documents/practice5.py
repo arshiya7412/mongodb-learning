@@ -4,12 +4,13 @@ from pymongo import MongoClient
 
 load_dotenv()
 
-token = os.getenv("MONGODB_URI")
+token  = os.getenv("MONGODB_URI")
 client = MongoClient(token)
 db = client["mongodb-learning"]
 users = db["users"]
 
-result = users.insert_many([{
+result = users.insert_many(
+    [{
     "name": "Arshiya",
     "age": 21,
     "role": "AI Developer",
@@ -20,14 +21,11 @@ result = users.insert_many([{
     }
 }])
 
-push = users.update_one(
+nested = users.update_one(
     {"name": "Arshiya"},
-    {"$push": {"skills": "SQL"}}
+    {"$set": {"address.city": "Banglore"}}
 )
-print(push)
-
-pull = users.update_one(
-    {"name": "Arshiya"},
-    {"$pull":{"skills": "SQL"}}
-    )
-print(pull)
+print(nested)
+print("Matched count:", nested.matched_count)
+print("Modified count:", nested.modified_count)
+print(users.find_one({"name": "Arshiya"}))
